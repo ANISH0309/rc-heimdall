@@ -26,14 +26,6 @@ export class CreateParticipantDto {
   @ApiProperty({ description: 'Email of the participant', example: 'yashkumar.verma2019@vitstudent.ac.in' })
   email: string;
 
-  /** College registration number of participant */
-  @ApiProperty({ description: 'Registration Number of participant', example: '19BCE2669' })
-  registrationNumber: string;
-
-  /** phone number of participant */
-  @ApiProperty({ description: 'Phone number of participant', example: '8864813176' })
-  phoneNumber: string;
-
   /** team name of participant, references [[Team]] by [[Team.name]] */
   @IsNotEmpty()
   @ApiProperty({ description: 'Team Name of participant', example: 'team_1' })

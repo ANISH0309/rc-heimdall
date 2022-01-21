@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, IsNull, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Team } from '../teams/team.entity';
 
@@ -30,23 +30,11 @@ export class Participant extends BaseEntity {
   })
   email: string;
 
-  /** college registration number */
-  @Column({
-    nullable: true,
-  })
-  registrationNumber: string;
-
   /** whether participant is admin of his/her team */
   @Column({
     default: false,
   })
   isAdmin: boolean;
-
-  /** contact number of participant, optional */
-  @Column({
-    nullable: true,
-  })
-  phoneNumber: string;
 
   /** entity representing team which the participant is a member of */
   @ManyToOne(

@@ -21,13 +21,11 @@ export class ParticipantRepository extends Repository<Participant> {
    * participants to join a particular team.
    */
   async createParticipantAndJoinTeam(createParticipantDto: CreateParticipantDto, team: Team): Promise<Participant> {
-    const { email, googleID, name, phoneNumber, registrationNumber, isAdmin } = createParticipantDto;
+    const { email, googleID, name, isAdmin } = createParticipantDto;
     const participant = this.create();
     participant.email = email;
     participant.googleID = googleID;
     participant.name = name;
-    participant.phoneNumber = phoneNumber;
-    participant.registrationNumber = registrationNumber;
     participant.isAdmin = isAdmin;
     participant.team = team;
 
