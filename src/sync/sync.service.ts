@@ -108,34 +108,33 @@ export class SyncService {
   }
 
   async syncWithParticipants() {
-    try {
-      this.logger.verbose(`Updating participant storages`);
-      await this.judgeService.clear();
-      this.logger.verbose(`cleared judge submissions`);
-      await this.participantService.clear();
-      this.logger.verbose(`cleared participants list`);
+    // try {
+    this.logger.verbose(`Updating participant storages`);
+    await this.judgeService.clear();
+    this.logger.verbose(`cleared judge submissions`);
+    await this.participantService.clear();
+    this.logger.verbose(`cleared participants list`);
 
-      const { data } = await this.http.get(this.registrationEndpoint).toPromise();
-      data.forEach(async (item) => {
-        this.logger.verbose(`adding ${item.name} with ${item.googleId}`);
-        try {
-          await this.participantService.create({
-            email: item.email,
-            googleID: item.googleId,
-            isAdmin: item.isAdmin,
-            name: item.name,
-            phoneNumber: '9870000000',
-            registrationNumber: '19BCE0000',
-            teamName: item.teamName,
-          });
-        } catch (e) {
-          this.logger.error(`Error adding ${item.name} / ${item.teamName} / ${item.googleId}`);
-        }
-      });
-      console.log(data.length);
-    } catch (e) {
-      this.logger.error('Error seeding participants');
-    }
+    const { data } = await this.http
+      .post(this.registrationEndpoint, {
+        secret: config.get('roundone.secret'),
+      })
+      .toPromise();
+
+    data.forEach(async (item) => {
+      this.logger.verbose(`adding ${item.name} with ${item.googleId}`);
+      try {
+        await this.participantService.create({
+          email: item.email,
+          googleID: item.googleId,
+          isAdmin: item.isAdmin,
+          name: item.name,
+          teamName: item.teamName,
+        });
+      } catch (e) {
+        this.logger.error(`Error adding ${item.name} / ${item.teamName} / ${item.googleId}`);
+      }
+    });
   }
 
   /**
