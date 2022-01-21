@@ -1,7 +1,7 @@
 import * as config from 'config';
 
 export const oldJWTConstants = {
-  secret: 'Istillloveher',
+  secret: config.get('jwt.oldsecret'),
 };
 
 export const newJWTConstants = {
